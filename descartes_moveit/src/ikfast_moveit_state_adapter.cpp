@@ -88,10 +88,25 @@ bool descartes_moveit::IkFastMoveitStateAdapter::getAllIK(const Eigen::Isometry3
     return false;
   }
 
+  const auto last_index = 5;
+  const auto index4 = 3;
+
   for (auto& sol : joint_results)
   {
-    if (isValid(sol))
-      joint_poses.push_back(std::move(sol));
+    const double joint6 = sol[last_index];
+    const double joint4 = sol[index4];
+
+    for (int i = -1; i <= 1; ++i)
+    {
+      sol[last_index] = joint6 + i * 2.0 * M_PI;
+      for (int j = -1; j <= 1; ++j)
+      {
+        sol[index4] = joint4 + j * 2.0 * M_PI;
+
+        if (isValid(sol))
+          joint_poses.push_back(sol);
+      }
+}
   }
 
   return joint_poses.size() > 0;
