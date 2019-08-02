@@ -60,7 +60,6 @@ bool descartes_moveit::IkFastMoveitStateAdapter::initialize(const std::string& r
   {
     return false;
   }
-
   return computeIKFastTransforms();
 }
 
@@ -71,7 +70,8 @@ bool descartes_moveit::IkFastMoveitStateAdapter::getAllIK(const Eigen::Isometry3
   const auto& solver = joint_group_->getSolverInstance();
 
   // Transform input pose
-  Eigen::Isometry3d tool_pose = world_to_base_.frame_inv * pose * tool0_to_tip_.frame;
+  //Eigen::Isometry3d tool_pose = world_to_base_.frame_inv * pose * tool0_to_tip_.frame;
+  Eigen::Isometry3d tool_pose = pose;
 
   // convert to geometry_msgs ...
   geometry_msgs::Pose geometry_pose;
