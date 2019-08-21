@@ -70,8 +70,7 @@ bool descartes_moveit::IkFastMoveitStateAdapter::getAllIK(const Eigen::Isometry3
   const auto& solver = joint_group_->getSolverInstance();
 
   // Transform input pose
-  //Eigen::Isometry3d tool_pose = world_to_base_.frame_inv * pose * tool0_to_tip_.frame;
-  Eigen::Isometry3d tool_pose = pose;
+  Eigen::Isometry3d tool_pose = world_to_base_.frame_inv * pose * tool0_to_tip_.frame;
 
   // convert to geometry_msgs ...
   geometry_msgs::Pose geometry_pose;
@@ -99,14 +98,11 @@ bool descartes_moveit::IkFastMoveitStateAdapter::getAllIK(const Eigen::Isometry3
     for (int i = -1; i <= 1; ++i)
     {
       sol[last_index] = joint6 + i * 2.0 * M_PI;
-      for (int j = -1; j <= 1; ++j)
-      {
-        sol[index4] = joint4 + j * 2.0 * M_PI;
 
-        if (isValid(sol))
+      
+      if (isValid(sol))
           joint_poses.push_back(sol);
-      }
-}
+    }
   }
 
   return joint_poses.size() > 0;
