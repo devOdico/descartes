@@ -46,6 +46,14 @@ public:
    */
   void setState(const moveit::core::RobotState& state);
 
+  /**
+   * @brief Set the planning scene based on message. This also sets the robot model.
+   * transforms are recomputed.
+   * 
+   * @param planning_scene 
+   */
+  void setPlanningScene(const moveit_msgs::PlanningScene &planning_scene);
+
 protected:
   bool computeIKFastTransforms();
 

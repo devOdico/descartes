@@ -249,10 +249,10 @@ bool MoveitStateAdapter::isInCollision(const std::vector<double>& joint_pose) co
   bool in_collision = false;
   if (check_collisions_)
   {
-    moveit::core::RobotState state (robot_model_ptr_);
+    moveit::core::RobotState state (planning_scene_->getCurrentState());
     state.setToDefaultValues();
     state.setJointGroupPositions(joint_group_, joint_pose);
-    in_collision = planning_scene_->isStateColliding(state, group_name_);
+    in_collision = planning_scene_->isStateColliding(state);
   }
   return in_collision;
 }
@@ -341,6 +341,12 @@ void MoveitStateAdapter::setState(const moveit::core::RobotState& state)
                                                   "initialize()?");
   *robot_state_ = state;
   planning_scene_->setCurrentState(state);
+}
+
+void MoveitStateAdapter::setPlanningScene(const moveit_msgs::PlanningScene &planning_scene)
+{
+  planning_scene_->setPlanningSceneMsg(planning_scene);
+  *robot_state_ = planning_scene_->getCurrentState();
 }
 
 }  // descartes_moveit
