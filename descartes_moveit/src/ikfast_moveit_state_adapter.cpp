@@ -146,6 +146,12 @@ void descartes_moveit::IkFastMoveitStateAdapter::setState(const moveit::core::Ro
   computeIKFastTransforms();
 }
 
+void descartes_moveit::IkFastMoveitStateAdapter::setPlanningScene(const moveit_msgs::PlanningScene& planning_scene)
+{
+  descartes_moveit::MoveitStateAdapter::setPlanningScene(planning_scene);
+  computeIKFastTransforms();
+}
+
 bool descartes_moveit::IkFastMoveitStateAdapter::computeIKFastTransforms()
 {
   // look up the IKFast base and tool frame

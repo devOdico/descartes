@@ -96,6 +96,15 @@ public:
    */
   void setState(const moveit::core::RobotState &state);
 
+  /**
+   * @brief Set the planning scene used in this model to be the one described in the message.
+   *        Useful for planning with a scene that has been updated since it was loaded from a
+   *        urdf file
+   * 
+   * @param planning_scene 
+   */
+  void setPlanningScene(const moveit_msgs::PlanningScene &planning_scene);
+
 protected:
   /**
    * Gets IK solution (assumes robot state is pre-seeded)
